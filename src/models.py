@@ -14,7 +14,7 @@ class user(Base):
     username = Column(String(100), nullable=False)
     email = Column(String(100), nullable=False)
     password = Column(String(100), nullable=False)
-    favorites = relationship('favorite')
+    favorites = relationship('favorite', uselist=False, back_populates="parent")
 
 class people(Base):
     __tablename__ = 'people'
@@ -44,6 +44,7 @@ class favorite(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     people_id = Column(Integer, ForeignKey('people.id'))
     planet_id = Column(Integer, ForeignKey('planet.id'))
+    user = relationship("user", back_populates="child")
 
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
